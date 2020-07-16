@@ -9,17 +9,10 @@ include:
 
   {%- if etcd.manage_users %}
 etcd-user-group-home:
-  group.present:
-    - name: {{ etcd.group or 'etcd' }}
-    - system: True
-    - require_in:
-      - user: etcd-user-group-home
   user.present:
     - name: {{ etcd.user or 'etcd' }}
-    - gid_from_name: True
+    - gid: {{ etcd.user or 'etcd' }}
     - home: {{ etcd.prefix }}
-    - require:
-      - group: etcd-user-group-home
     - require_in:
       - file: etcd-user-envfile
       - file: etcd-extract-dirs
@@ -43,7 +36,6 @@ etcd-extract-dirs:
       - group
     - require:
       - user: etcd-user-group-home
-      - group: etcd-user-group-home
     - require_in:
       - file: etcd-user-envfile
 
