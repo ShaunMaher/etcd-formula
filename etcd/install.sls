@@ -11,7 +11,7 @@ include:
 etcd-user-group-home:
   user.present:
     - name: {{ etcd.user or 'etcd' }}
-    - gid: {{ etcd.user or 'etcd' }}
+    - gid: {{ etcd.group or 'etcd' }}
     - home: {{ etcd.prefix }}
     - require_in:
       - file: etcd-user-envfile
